@@ -1,3 +1,3 @@
 # vizlib
 
-##### vizlib is a library used to Visualize Machine Learning Algorithms.
+##### vizlib is a library used to visualize popular Machine Learning algorithms.
