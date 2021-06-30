@@ -250,10 +250,6 @@ class LinearRegressionVisualizer:
     def show_data(self, **kwargs) -> Optional[plt.figure]:
         """
         Shows a plot of the data points used to perform linear regression.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         plt.style.use("ggplot")
@@ -270,10 +266,6 @@ class LinearRegressionVisualizer:
     def show_initial_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
         """
         Shows a plot of the initial regression line with or without data.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         plt.style.use("ggplot")
@@ -293,10 +285,6 @@ class LinearRegressionVisualizer:
     def show_current_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
         """
         Shows a plot of the current regression line with or without data.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         plt.style.use("ggplot")
@@ -316,10 +304,6 @@ class LinearRegressionVisualizer:
     def show_regression_line_comparison(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
         """
         Shows a plot of the current regression line with or without data.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         plt.style.use("ggplot")
@@ -341,10 +325,6 @@ class LinearRegressionVisualizer:
     def show_regression_line_progression(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
         """
         Shows a collage of the regression line progression through training.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
         plt.style.use("ggplot")
         fig, ((ax1, ax2, ax3), (ax4, ax5, ax6)) = plt.subplots(nrows=2, ncols=3, sharex='all', sharey='all')
@@ -374,10 +354,6 @@ class LinearRegressionVisualizer:
     def show_cost_history(self, **kwargs) -> Optional[plt.figure]:
         """
         Shows a plot of the cost through the history of training.
-
-        Pass save=True as a keyword argument to save figure.
-
-        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         plt.style.use("ggplot")
