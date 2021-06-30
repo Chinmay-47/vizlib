@@ -28,7 +28,7 @@ from vizlib.utils import (DataPointsGenerator, timer, clear_prev_plots, set_defa
                           return_or_save_figure)
 
 
-class LinearRegressionVisualizer:
+class SimpleLinearRegressionVisualizer:
     """
     Performs and Visualizes Linear Regression.
     """
@@ -424,7 +424,7 @@ class LinearRegressionVisualizer:
 
 
 def main():
-    viz = LinearRegressionVisualizer()
+    viz = SimpleLinearRegressionVisualizer()
     viz.visualize()
 
 
@@ -433,7 +433,7 @@ def _profiler():
     import pstats
 
     with cProfile.Profile() as pr:
-        viz = LinearRegressionVisualizer()
+        viz = SimpleLinearRegressionVisualizer()
         viz.train()
         viz.show_cost_history()
 

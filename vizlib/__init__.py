@@ -1,2 +1,2 @@
-from vizlib.Simple_Linear_Regression import LinearRegressionVisualizer
+from vizlib.Simple_Linear_Regression import SimpleLinearRegressionVisualizer
 import vizlib.utils as vizutils
