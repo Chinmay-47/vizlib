@@ -244,6 +244,9 @@ class SimpleLinearRegressionVisualizer:
             self._update_weights()
             self._weights_history.append((self._theta1, self._theta0))
 
+        # Final cost
+        self._cost_history.append(self.cost)
+
     @return_or_save_figure
     @set_default_labels
     @clear_prev_plots
@@ -334,7 +337,7 @@ class SimpleLinearRegressionVisualizer:
             [axis.scatter(self._x_values, self._y_values, marker='*', c='red') for axis in _all_ax]
 
         ax1.plot(list(zip(*self._initial_regression_line))[0], list(zip(*self._initial_regression_line))[1], c='green')
-        ax1.set_title("No Training",  fontsize=10)
+        ax1.set_title("No Training",  fontsize=8)
 
         _weights = []
         for i in range(1, 6):
@@ -342,7 +345,7 @@ class SimpleLinearRegressionVisualizer:
             _intercept = self.weights_history[((self.weights_history.shape[0] - 1)//5) * i][1]
             _curr_line = self._dpgen.gen_line(slope=_slope, intercept=_intercept, no_points=self._no_data_points)
             _all_ax[i].plot(list(zip(*_curr_line))[0], list(zip(*_curr_line))[1], c='green')
-            _all_ax[i].set_title("{}% Trained".format(i * 20), fontsize=10)
+            _all_ax[i].set_title("{}% Trained".format(i * 20), fontsize=8)
 
         fig.suptitle("Regression Line Progression", fontsize='x-large')
 
@@ -368,7 +371,7 @@ class SimpleLinearRegressionVisualizer:
 
     @clear_prev_plots
     def visualize(self, show_data: Optional[bool] = True, show_initial: Optional[bool] = True,
-                  save: Optional[bool] = False) -> Union[FuncAnimation, None]:
+                  save: Optional[bool] = False) -> Optional[FuncAnimation]:
         """
         Visualizes the process of Linear regression.
 
