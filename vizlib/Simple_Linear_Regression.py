@@ -416,7 +416,7 @@ class LinearRegressionVisualizer:
         plt.show()
 
         if save:
-            animation.save("Linear_Regression_Visualization.gif", writer="Pillow", fps=30, bitrate=-1)
+            animation.save("Simple_Linear_Regression_Visualization.gif", writer="Pillow", fps=30, bitrate=-1)
             clear_plots()
             return
 
