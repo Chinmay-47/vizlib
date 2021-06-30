@@ -19,6 +19,7 @@
 
 import os
 import time
+import types
 from functools import wraps
 from typing import Optional, Union, Tuple
 
@@ -26,11 +27,32 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+def add_docstring(input_func: object, doc_to_add: str) -> object:
+    """
+    Helper function to add docstrings to other functions.
+    """
+
+    if not isinstance(input_func, (types.FunctionType, types.MethodType)):
+        raise TypeError("Input needs to be a function.")
+
+    existing_docstring = ['\n', str(input_func.__doc__).strip(), '\n'] if input_func.__doc__ is not None else []
+    input_func.__doc__ = ' '.join(existing_docstring + [doc_to_add])
+    return input_func
+
+
 def return_or_save_figure(func):
     """
     Helper decorator to optionally save a matplotlib figure
     and also optionally return the matplotlib figure for a given plot.
     """
+
+    doc_to_add = """
+    Pass save=True as a keyword argument to save figure. 
+
+    Pass return_fig=True as a keyword argument to return the figure.
+    """
+
+    func = add_docstring(func, doc_to_add)
 
     @wraps(func)
     def decorator(*args, **kwargs):
