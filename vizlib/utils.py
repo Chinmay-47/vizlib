@@ -313,6 +313,37 @@ class DataPointsGenerator:
                                    i + (np.random.uniform(1.5, 3) * np.random.standard_normal())])
                          for i in range(no_of_points)])
 
+    def gen_linear3D(self, no_of_points: Optional[int] = 1, is_increasing: Optional[bool] = True,
+                     randomize: Optional[bool] = False) -> np.ndarray:
+        """
+        Generates random 3-Dimensional Data in a linearly ascending or descending order.
+
+        :param no_of_points: Shape of the array of points to be returned.
+        :param is_increasing: True by default. Returns decreasing, if set to False.
+        :param randomize: Will generate new set of data points if set to True.
+        :return: A numpy array of given number of 3 Dimensional linearly ascending or descending points.
+        """
+
+        if not isinstance(no_of_points, int):
+            raise TypeError("Input for number of points needs to be an Integer.")
+
+        if not isinstance(is_increasing, bool):
+            raise TypeError("Input for is_increasing needs to be True or False.")
+
+        if not randomize:
+            self.__set_seed()
+
+        if not is_increasing:
+            return np.array([np.array([i + (np.random.uniform(1.5, 3) * np.random.standard_normal()),
+                                       j + (np.random.uniform(1.5, 3) * np.random.standard_normal()),
+                                       i + (np.random.uniform(1.5, 3) * np.random.standard_normal())])
+                             for i, j in list(zip(range(no_of_points), reversed(range(no_of_points))))])
+
+        return np.array([np.array([i + (np.random.uniform(1.5, 3) * np.random.standard_normal()),
+                                   i + (np.random.uniform(1.5, 3) * np.random.standard_normal()),
+                                   i + (np.random.uniform(1.5, 3) * np.random.standard_normal())])
+                         for i in range(no_of_points)])
+
     @staticmethod
     def gen_line(slope: Union[float, int], intercept: Union[float, int], no_points: Optional[int] = 10) -> np.ndarray:
         """
