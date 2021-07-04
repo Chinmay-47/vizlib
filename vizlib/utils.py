@@ -366,6 +366,40 @@ class DataPointsGenerator:
         return np.array(list(zip(x_vals, y_vals)))
 
     @staticmethod
+    def gen_plane(coeff1: Union[float, int], coeff2: Union[float, int], intercept: Union[float, int],
+                  no_points: Optional[int] = 10, mesh: Optional[bool] = False) -> np.ndarray:
+        """
+        Generates a plane for given coefficients and intercept as z = mx1 + nx2 + c
+
+        :param coeff1: First coefficient of the plane to construct.
+        :param coeff2: Second coefficient of the plane to construct.
+        :param intercept: Intercept of the plane to construct.
+        :param no_points: Number of points to use to construct the plane.
+        :param mesh: Will return meshgrids to plot surface if set to True.
+        :return: A numpy array of 3D points (x1, x2, z) on the plane.
+        If mesh=True, a numpy array of meshgrids (X1, X2, Z) to plot the surface of the plane.
+        """
+
+        if not isinstance(coeff1, (float, int)):
+            raise TypeError("Coefficient 1 should be either a float or an integer.")
+        if not isinstance(coeff2, (float, int)):
+            raise TypeError("Coefficient 2 should be either a float or an integer.")
+        if not isinstance(intercept, (float, int)):
+            raise TypeError("Intercept should be either a float or an integer.")
+
+        x1_vals = np.linspace(1, no_points, no_points)
+        x2_vals = np.linspace(1, no_points, no_points)
+
+        if mesh:
+            X1, X2 = np.meshgrid(x1_vals, x1_vals)
+            Z = (coeff1 * X1) + (coeff2 * X2) + intercept
+            return np.array((X1, X2, Z))
+
+        z_vals = (coeff1 * x1_vals) + (coeff2 * x2_vals) + intercept
+
+        return np.array(list(zip(x1_vals, x2_vals, z_vals)))
+
+    @staticmethod
     def gen_line_given_x(x_values: Union[np.ndarray, list], slope: Union[float, int],
                          intercept: Union[float, int]) -> np.ndarray:
         """
@@ -384,10 +418,46 @@ class DataPointsGenerator:
         if not isinstance(intercept, (float, int)):
             raise TypeError("Intercept should be either a float or an integer.")
 
-        x_vals = x_values
-        y_vals = (slope * x_values) + intercept
+        y_vals = (slope * np.array(x_values)) + intercept
 
-        return np.array(list(zip(x_vals, y_vals)))
+        return np.array(list(zip(x_values, y_vals)))
+
+    @staticmethod
+    def gen_plane_given_x(x1_values: Union[np.ndarray, list], x2_values: Union[np.ndarray, list],
+                          coeff1: Union[float, int], coeff2: Union[float, int],
+                          intercept: Union[float, int], mesh: Optional[bool] = False) -> np.ndarray:
+        """
+        Generates a plane for a given set of values for x1 and x2, and coefficients and intercept as z = mx1 + nx2 + c
+
+        :param x1_values: Values of x1 to use to compute Z
+        :param x2_values: Values of x2 to use to compute z
+        :param coeff1: First coefficient of the plane to construct.
+        :param coeff2: Second coefficient of the plane to construct.
+        :param intercept: Intercept of the plane to construct.
+        :param mesh: Will return meshgrids to plot surface if set to True.
+        :return: A numpy array of 3D points (x1, x2, z) on the plane.
+        If mesh=True, a numpy array of meshgrids (X1, X2, Z) to plot the surface of the plane.
+        """
+
+        if not isinstance(x1_values, (np.ndarray, list)):
+            raise TypeError("X1 values should be either a list or a numpy array.")
+        if not isinstance(x2_values, (np.ndarray, list)):
+            raise TypeError("X2 values should be either a list or a numpy array.")
+        if not isinstance(coeff1, (float, int)):
+            raise TypeError("Coefficient 1 should be either a float or an integer.")
+        if not isinstance(coeff2, (float, int)):
+            raise TypeError("Coefficient 2 should be either a float or an integer.")
+        if not isinstance(intercept, (float, int)):
+            raise TypeError("Intercept should be either a float or an integer.")
+
+        if mesh:
+            X1, X2 = np.meshgrid(np.array(x1_values), np.array(x2_values))
+            Z = (coeff1 * X1) + (coeff2 * X2) + intercept
+            return np.array((X1, X2, Z))
+
+        z_vals = (coeff1 * np.array(x1_values)) + (coeff2 * np.array(x2_values)) + intercept
+
+        return np.array(list(zip(x2_values, x2_values, z_vals)))
 
 
 if __name__ == '__main__':
