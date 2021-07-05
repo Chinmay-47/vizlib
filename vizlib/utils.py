@@ -145,7 +145,9 @@ class DataPointsGenerator:
         :param random_state: The value of the the random state.
         """
         if not isinstance(random_state, int):
-            raise TypeError("Random State needs to be an Integer.")
+            raise TypeError("Random State needs to be an Integer between 0 and 2**32 - 1.")
+        if random_state < 0:
+            raise ValueError("Random State needs to be an Integer between 0 and 2**32 - 1.")
 
         cls.__random_state = random_state
 
