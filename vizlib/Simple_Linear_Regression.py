@@ -21,7 +21,7 @@ from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, FFMpegWriter
 from tqdm import tqdm
 
 from vizlib.utils import (DataPointsGenerator, timer, clear_prev_plots, set_default_labels, clear_plots,
@@ -81,6 +81,13 @@ class SimpleLinearRegressionVisualizer:
                                                                                  slope=self._theta1,
                                                                                  intercept=self._theta0)
         self._no_epochs = no_epochs
+
+    @property
+    def random_state(self) -> int:
+        """
+        Random state used to generate all initial values for all parameters.
+        """
+        return self.__random_state
 
     @property
     def data_points(self) -> np.ndarray:
@@ -419,7 +426,8 @@ class SimpleLinearRegressionVisualizer:
         plt.show()
 
         if save:
-            animation.save("Simple_Linear_Regression_Visualization.gif", writer="Pillow", fps=30, bitrate=-1)
+            Writer = FFMpegWriter(fps=30, codec='libx264', bitrate=-1)
+            animation.save("Simple_Linear_Regression_Visualization.mp4", writer=Writer)
             clear_plots()
             return
 
