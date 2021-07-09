@@ -22,6 +22,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation, FFMpegWriter
+from matplotlib.figure import Figure
 from tqdm import tqdm
 
 from vizlib.utils import (DataPointsGenerator, timer, clear_prev_plots, set_default_labels, clear_plots,
@@ -257,7 +258,7 @@ class SimpleLinearRegressionVisualizer:
     @return_or_save_figure
     @set_default_labels
     @clear_prev_plots
-    def show_data(self, **kwargs) -> Optional[plt.figure]:
+    def show_data(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the data points used to perform linear regression.
         """
@@ -273,7 +274,7 @@ class SimpleLinearRegressionVisualizer:
     @return_or_save_figure
     @set_default_labels
     @clear_prev_plots
-    def show_initial_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
+    def show_initial_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the initial regression line with or without data.
         """
@@ -292,7 +293,7 @@ class SimpleLinearRegressionVisualizer:
     @return_or_save_figure
     @set_default_labels
     @clear_prev_plots
-    def show_current_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
+    def show_current_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the current regression line with or without data.
         """
@@ -311,7 +312,7 @@ class SimpleLinearRegressionVisualizer:
     @return_or_save_figure
     @set_default_labels
     @clear_prev_plots
-    def show_regression_line_comparison(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
+    def show_regression_line_comparison(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the current regression line with or without data.
         """
@@ -332,7 +333,7 @@ class SimpleLinearRegressionVisualizer:
 
     @return_or_save_figure
     @clear_prev_plots
-    def show_regression_line_progression(self, include_data: Optional[bool] = True, **kwargs) -> Optional[plt.figure]:
+    def show_regression_line_progression(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
         """
         Shows a collage of the regression line progression through training.
         """
@@ -361,7 +362,7 @@ class SimpleLinearRegressionVisualizer:
 
     @return_or_save_figure
     @clear_prev_plots
-    def show_cost_history(self, **kwargs) -> Optional[plt.figure]:
+    def show_cost_history(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the cost through the history of training.
         """
