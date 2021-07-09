@@ -134,22 +134,23 @@ def timer(func):
 class DataPointsGenerator:
     """DataPointsGenerator: Generates Data points of different dimensions and distributions."""
 
-    __random_state: int = 0
+    def __init__(self):
+        self.__random_state: int = 0
 
-    @classmethod
-    def set_random_state(cls, random_state: int) -> None:
+    def set_random_state(self, random_state: int) -> None:
         """
         Sets the random state of the DataPointsGenerator.
         This random state value is used as the seed value in the data point generator functions.
 
         :param random_state: The value of the the random state.
         """
+
         if not isinstance(random_state, int):
             raise TypeError("Random State needs to be an Integer between 0 and 2**32 - 1.")
         if random_state < 0:
             raise ValueError("Random State needs to be an Integer between 0 and 2**32 - 1.")
 
-        cls.__random_state = random_state
+        self.__random_state = random_state
 
     def __setattr__(self, key, value):
         if key == '__random_state':
