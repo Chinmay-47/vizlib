@@ -18,8 +18,10 @@
 
 
 import unittest
-from vizlib import vizutils
+
 import numpy as np
+
+from vizlib import vizutils
 
 
 class TestDataPointsGenerator(unittest.TestCase):
