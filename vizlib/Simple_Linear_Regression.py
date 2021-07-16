@@ -274,7 +274,7 @@ class SimpleLinearRegressionVisualizer:
         )
 
         if 'save' in kwargs and kwargs['save']:
-            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+            fig.write_image('show_data.jpeg')
 
         if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
@@ -305,7 +305,7 @@ class SimpleLinearRegressionVisualizer:
         )
 
         if 'save' in kwargs and kwargs['save']:
-            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+            fig.write_image('show_initial_regression_line.jpeg')
 
         if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
@@ -336,7 +336,7 @@ class SimpleLinearRegressionVisualizer:
         )
 
         if 'save' in kwargs and kwargs['save']:
-            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+            fig.write_image('show_current_regression_line.jpeg')
 
         if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
@@ -410,15 +410,23 @@ class SimpleLinearRegressionVisualizer:
         Shows a plot of the cost through the history of training.
         """
 
-        plt.style.use("ggplot")
-        fig, ax = plt.subplots()
-        ax.plot(list(range(len(self._cost_history))), self._cost_history, c='blue')
-        plt.title("Cost History")
-        plt.xlabel("Epochs")
-        plt.ylabel("Cost")
+        fig = go.Figure(data=[go.Scatter(x=list(range(len(self._cost_history))), y=self._cost_history,
+                                         marker=dict(color='blue'), name='Cost History')])
 
-        if kwargs['return_fig']:
+        fig.update_layout(
+            title="Cost History through the epochs of training",
+            xaxis_title="Epochs",
+            yaxis_title="Cost",
+            title_x=0.5
+        )
+
+        if 'save' in kwargs and kwargs['save']:
+            fig.write_image('show_cost_history.jpeg')
+
+        if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
+
+        fig.show()
 
     @clear_prev_plots
     def visualize(self, show_data: Optional[bool] = True, show_initial: Optional[bool] = True,
