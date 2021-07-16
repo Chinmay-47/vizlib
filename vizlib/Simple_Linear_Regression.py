@@ -283,7 +283,7 @@ class SimpleLinearRegressionVisualizer:
 
     def show_initial_regression_line(self, **kwargs) -> Optional[Figure]:
         """
-        Shows a plot of the initial regression line with or without data.
+        Shows a plot of the initial regression line with data.
 
         Pass save=True as a keyword argument to save figure.
 
@@ -314,7 +314,7 @@ class SimpleLinearRegressionVisualizer:
 
     def show_current_regression_line(self, **kwargs) -> Optional[Figure]:
         """
-        Shows a plot of the current regression line with or without data.
+        Shows a plot of the current regression line with data.
 
         Pass save=True as a keyword argument to save figure.
 
@@ -345,7 +345,11 @@ class SimpleLinearRegressionVisualizer:
 
     def show_regression_line_comparison(self, **kwargs) -> Optional[Figure]:
         """
-        Shows a plot of the current regression line with or without data.
+        Shows a plot of the current regression line with data.
+
+        Pass save=True as a keyword argument to save figure.
+
+        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         fig = go.Figure(data=[go.Scatter(x=self._x_values, y=self._y_values, mode='markers',
@@ -408,6 +412,10 @@ class SimpleLinearRegressionVisualizer:
     def show_cost_history(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the cost through the history of training.
+
+        Pass save=True as a keyword argument to save figure.
+
+        Pass return_fig=True as a keyword argument to return the figure.
         """
 
         fig = go.Figure(data=[go.Scatter(x=list(range(len(self._cost_history))), y=self._cost_history,
