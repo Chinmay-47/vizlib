@@ -19,11 +19,11 @@
 
 from typing import Optional
 
-import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation, FFMpegWriter
-from matplotlib.figure import Figure
 from tqdm import tqdm
+import plotly.graph_objects as go
+from plotly.graph_objects import Figure
 
 from vizlib.utils import (DataPointsGenerator, timer, clear_prev_plots, set_default_labels, clear_plots,
                           return_or_save_figure)
@@ -255,77 +255,124 @@ class SimpleLinearRegressionVisualizer:
             self._weights_history.append((self._theta1, self._theta0))
             self._cost_history.append(self.cost)
 
-    @return_or_save_figure
-    @set_default_labels
-    @clear_prev_plots
     def show_data(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the data points used to perform linear regression.
+
+        Pass save=True as a keyword argument to save figure.
+
+        Pass return_fig=True as a keyword argument to return the figure.
         """
 
-        plt.style.use("ggplot")
-        fig, ax = plt.subplots()
-        ax.scatter(self._x_values, self._y_values, marker='*', c='red')
-        plt.title("Data Points for Regression")
+        fig = go.Figure(data=[go.Scatter(x=self._x_values, y=self._y_values, mode='markers',
+                                         marker=dict(size=8, color='red', opacity=0.8))])
+        fig.update_layout(
+            title="Linear Regression Data",
+            xaxis_title="X Values",
+            yaxis_title="Y Values",
+            title_x=0.5
+        )
 
-        if kwargs['return_fig']:
+        if 'save' in kwargs and kwargs['save']:
+            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+
+        if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
 
-    @return_or_save_figure
-    @set_default_labels
-    @clear_prev_plots
-    def show_initial_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
+        fig.show()
+
+    def show_initial_regression_line(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the initial regression line with or without data.
+
+        Pass save=True as a keyword argument to save figure.
+
+        Pass return_fig=True as a keyword argument to return the figure.
         """
 
-        plt.style.use("ggplot")
-        fig, ax = plt.subplots()
-        if include_data:
-            ax.scatter(self._x_values, self._y_values, marker='*', c='red')
-        ax.plot(self._initial_regression_line[:, 0], self._initial_regression_line[:, 1], c='blue')
-        plt.title("Initial Regression Line")
+        fig = go.Figure(data=[go.Scatter(x=self._x_values, y=self._y_values, mode='markers',
+                                         marker=dict(size=8, color='red', opacity=0.8), name='Data Points')])
 
-        if kwargs['return_fig']:
+        fig.add_traces(data=[go.Scatter(x=self._initial_regression_line[:, 0],
+                                        y=self._initial_regression_line[:, 1],
+                                        name='Regression Line', marker=dict(color='blue'))])
+
+        fig.update_layout(
+            title="Initial Regression Line",
+            xaxis_title="X Values",
+            yaxis_title="Y Values",
+            title_x=0.5
+        )
+
+        if 'save' in kwargs and kwargs['save']:
+            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+
+        if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
 
-    @return_or_save_figure
-    @set_default_labels
-    @clear_prev_plots
-    def show_current_regression_line(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
+        fig.show()
+
+    def show_current_regression_line(self, **kwargs) -> Optional[Figure]:
+        """
+        Shows a plot of the current regression line with or without data.
+
+        Pass save=True as a keyword argument to save figure.
+
+        Pass return_fig=True as a keyword argument to return the figure.
+        """
+
+        fig = go.Figure(data=[go.Scatter(x=self._x_values, y=self._y_values, mode='markers',
+                                         marker=dict(size=8, color='red', opacity=0.8), name='Data Points')])
+
+        fig.add_traces(data=[go.Scatter(x=self.current_regression_line[:, 0],
+                                        y=self.current_regression_line[:, 1],
+                                        name='Regression Line', marker=dict(color='green'))])
+
+        fig.update_layout(
+            title="Current Regression Line",
+            xaxis_title="X Values",
+            yaxis_title="Y Values",
+            title_x=0.5
+        )
+
+        if 'save' in kwargs and kwargs['save']:
+            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+
+        if 'return_fig' in kwargs and kwargs['return_fig']:
+            return fig
+
+        fig.show()
+
+    def show_regression_line_comparison(self, **kwargs) -> Optional[Figure]:
         """
         Shows a plot of the current regression line with or without data.
         """
 
-        plt.style.use("ggplot")
-        fig, ax = plt.subplots()
-        if include_data:
-            ax.scatter(self._x_values, self._y_values, marker='*', c='red')
-        ax.plot(self.current_regression_line[:, 0], self.current_regression_line[:, 1], c='blue')
-        plt.title("Current Regression Line")
+        fig = go.Figure(data=[go.Scatter(x=self._x_values, y=self._y_values, mode='markers',
+                                         marker=dict(size=8, color='red', opacity=0.8), name='Data Points')])
 
-        if kwargs['return_fig']:
+        fig.add_traces(data=[go.Scatter(x=self._initial_regression_line[:, 0],
+                                        y=self._initial_regression_line[:, 1],
+                                        name='Initial Regression Line', marker=dict(color='blue'))])
+
+        fig.add_traces(data=[go.Scatter(x=self.current_regression_line[:, 0],
+                                        y=self.current_regression_line[:, 1],
+                                        name='Current Regression Line', marker=dict(color='green'))])
+
+        fig.update_layout(
+            title="Initial Regression Line vs Current Regression Line",
+            xaxis_title="X Values",
+            yaxis_title="Y Values",
+            title_x=0.5
+        )
+
+        if 'save' in kwargs and kwargs['save']:
+            fig.write_image(self.__class__.__name__ + '_' + self.show_data.__name__ + '.jpeg')
+
+        if 'return_fig' in kwargs and kwargs['return_fig']:
             return fig
 
-    @return_or_save_figure
-    @set_default_labels
-    @clear_prev_plots
-    def show_regression_line_comparison(self, include_data: Optional[bool] = True, **kwargs) -> Optional[Figure]:
-        """
-        Shows a plot of the current regression line with or without data.
-        """
-
-        plt.style.use("ggplot")
-        fig, ax = plt.subplots()
-        if include_data:
-            ax.scatter(self._x_values, self._y_values, marker='*', c='red')
-        ax.plot(self._initial_regression_line[:, 0], self._initial_regression_line[:, 1], c='blue', label="Intial")
-        ax.plot(self.current_regression_line[:, 0], self.current_regression_line[:, 1], c='green', label="Trained")
-        plt.title("Initial Regression Line vs Trained Regression Line")
-        ax.legend()
-
-        if kwargs['return_fig']:
-            return fig
+        fig.show()
 
     @return_or_save_figure
     @clear_prev_plots
